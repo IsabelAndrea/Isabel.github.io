@@ -1,0 +1,24 @@
+<div id="chartContainer">
+   <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="dist/dimple.v2.1.0.js"></script>
+  <script type="text/javascript">
+  //creamos una imagen svg que tendra el chart
+    var svg = dimple.newSvg("#chartContainer", 590, 400);
+    //le indicamos dónde están los datos, en este caso en la carpeta data
+    d3.tsv("data/m.tsv", function (data) {
+      var myChart = new dimple.chart(svg, data);
+      //le damos limites al circulo
+      myChart.setBounds(20, 20, 460, 360)
+      //divide el circulo según las proporciones de los datos de opening weekend
+      myChart.addMeasureAxis("p", "Opening Weekend");
+      //permite añadir los colores para cada film
+      var ring = myChart.addSeries("Film", dimple.plot.pie);
+      //radio del circulo interno
+      ring.innerRadius = "20%";
+      //tamaño de la leyenda, derecha, izquierda etc y posición
+      myChart.addLegend(500, 20, 90, 800, "left");
+      //dibujamos el chart
+      myChart.draw();
+    });
+  </script>
+</div>
